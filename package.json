@@ -15,7 +15,7 @@
     "monitor",
     "node"
   ],
-  "author": "Peter Banigo",
+  "author": "Doan Thi My Hao",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",

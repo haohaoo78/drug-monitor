@@ -108,5 +108,30 @@ exports.delete = (req,res)=>{
                 message: "Could not delete Drug with id=" + id
             });
         });
-
 }
+exports.purchase = async (req, res, next) => {
+    try {
+        const { drugId, quantity } = req.body;
+
+        if (!drugId || !quantity) {
+            return res.status(400).json({ message: "drugId and quantity are required" });
+        }
+
+        const drug = await Drugdb.findById(drugId);
+        if (!drug) throw new Error('Drug not found');
+        if (drug.pack < quantity) throw new Error('Not enough stock');
+
+        drug.pack -= quantity;
+        await drug.save();
+
+        res.status(200).json({
+            message: "Purchase successful",
+            drug: { id: drug._id, name: drug.name, pack: drug.pack },
+            quantity
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
