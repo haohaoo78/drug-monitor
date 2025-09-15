@@ -2,36 +2,40 @@ let Drugdb = require('../model/model');
 
 
 // creates and saves a new drug
+
 exports.create = (req,res)=>{
     // validate incoming request
-    if(!req.body){// if content of request (form data) is empty
-        res.status(400).send({ message : "Content cannot be emtpy!"});// respond with this
-        return;
+    if(!req.body){ 
+        return res.status(400).render("error", { 
+            title: "Error", 
+            message: "Content cannot be empty!" 
+        });
     }
 
-    //create new drug
+    // create new drug
     const drug = new Drugdb({
-        name : req.body.name,//take values from form and assign to schema
+        name : req.body.name,
         card : req.body.card,
-        pack: req.body.pack,
+        pack : req.body.pack,
         perDay : req.body.perDay,
         dosage : req.body.dosage
-    })
+    });
 
-    //save created drug to database
+    // save created drug to database
     drug
-        .save(drug)//use the save operation on drug
+        .save()
         .then(data => {
-            console.log(`${data.name} added to the database`) 
-            res.redirect('/manage');
+            console.log(`${data.name} added to the database`);
+            // thay vì res.send JSON, ta redirect về trang manage
+            res.redirect('/manage');  
         })
         .catch(err =>{
-            res.status(500).send({//catch error
-                message : err.message || "There was an error while adding the drug"
+            res.status(500).render("error", { 
+                title: "Error", 
+                message: err.message || "There was an error while adding the drug" 
             });
         });
-
-}
+};
 
 
 // can either retrieve all drugs from the database or retrieve a single user

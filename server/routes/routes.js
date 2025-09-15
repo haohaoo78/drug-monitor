@@ -8,11 +8,11 @@ const controller = require('../controller/controller');//uses the render.js file
 route.get('/', services.home);
 
 
-// route.get('/manage', services.manage);
-// route.get('/dosage', services.dosage);
-// route.get('/purchase', services.purchase);
-// route.get('/add-drug', services.addDrug);
-// route.get('/update-drug', services.updateDrug);
+route.get('/manage', services.manage);
+route.get('/dosage', services.dosage);
+route.get('/purchase', services.purchase);
+route.get('/add-drug', services.addDrug);
+route.get('/update-drug', services.updateDrug);
 
 // API for CRUD operations
 route.post('/api/drugs', validateDrug, controller.create);   // validate khi tạo mới
