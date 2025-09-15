@@ -22,32 +22,17 @@
       </tr>
     </thead>
      <tbody>
-	<% for(let i = 0; i < drugs.length; i++) { 
-		let totalPerDay = 0;
-		if (typeof drugs[i].perDay === 'string') {
-			totalPerDay = drugs[i].perDay.split(',')
-			.reduce((sum, val) => sum + (parseInt(val) || 0), 0);
-		} else {
-			totalPerDay = drugs[i].perDay;
-		}
-
-		let totalPills = totalPerDay * days;
-		let cardPerCard = drugs[i].card; // viên trên 1 card
-		let cardsPerPack = drugs[i].pack / drugs[i].card; // số card trong 1 pack
-
-		let cardsNeeded = Math.ceil(totalPills / cardPerCard);
-		let packsNeeded = Math.ceil(cardsNeeded / cardsPerPack);
-	%>
-	<tr>
-		<td><%= i + 1 %></td>
-		<td><%= drugs[i].name %></td>
-		<td>
-		<%= cardsNeeded %> (<%= cardsPerPack.toFixed(2) %> card per pack)
-		</td>
-		<td><%= packsNeeded %></td>
-	</tr>
-	<% } %>
-	</tbody>
+			<!-- Loop through drugs -->
+			<% for(let i = 0; i < drugs.length; i++) {%>
+			<% let pills = days*drugs[i].perDay; %>
+			<tr>
+				<td><%= i + 1 %></td>
+				<td><%= drugs[i].name %></td>
+				<td><%= Math.ceil(pills/drugs[i].card) %> (<%= drugs[i].pack/drugs[i].card %> <% if (drugs[i].pack/drugs[i].card < 2) { %> card <%} else { %> cards <% } %> per pack)</td>
+				<td><%= Math.ceil(pills/drugs[i].pack) %></td>
+			</tr>
+			<% } %> <!--  End loop -->
+		</tbody>
   </table>
 </main>
 
