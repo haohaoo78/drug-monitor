@@ -19,15 +19,15 @@
         </div>
         <div class="row mb-3 form-group justify-content-center">
             <label for="card" class="col-3 col-form-label">Tablets per Card</label>
-            <input type="number" name="card" value="<%= drug.card %>" placeholder="Tablets per Card" min="1" max="500" class="col-xs-8 col-md-4">
+            <input type="number" name="card" value="<%= drug.card %>" placeholder="Tablets per Card" min="1000" class="col-xs-8 col-md-4">
         </div>
         <div class="row mb-3 form-group justify-content-center">
             <label for="pack" class="col-3 col-form-label">Tablets per Pack</label>
-            <input type="number" name="pack" value="<%= drug.pack %>" placeholder="Tablets per Pack" min="1" max="500" class="col-xs-8 col-md-4">
+            <input type="number" name="pack" value="<%= drug.pack %>" placeholder="Tablets per Pack" min="1" class="col-xs-8 col-md-4">
         </div>
         <div class="row mb-3 form-group justify-content-center">
             <label for="perDay" class="col-3 col-form-label">Taken per day</label>
-            <input type="number" name="perDay" value="<%= drug.perDay %>" placeholder="Taken per day" min="1" max="500" class="col-xs-8 col-md-4">
+            <input type="number" name="perDay" value="<%= drug.perDay %>" placeholder="Taken per day" min="1" max="90" class="col-xs-8 col-md-4">
         </div>
         <div class="row mb-3 form-group justify-content-center">             
             <label for="dosage" class="col-3 col-form-label">Dosage</label>
@@ -40,6 +40,30 @@
     </div>
 </form>
 </main>
+
+<script>
+document.getElementById('update_drug').addEventListener('submit', async function(e){
+    e.preventDefault();
+    
+    const id = document.querySelector('input[name="id"]').value;
+    const name = document.querySelector('input[name="name"]').value;
+    const card = document.querySelector('input[name="card"]').value;
+    const pack = document.querySelector('input[name="pack"]').value;
+    const perDay = document.querySelector('input[name="perDay"]').value;
+    const dosage = document.querySelector('input[name="dosage"]').value;
+
+    const res = await fetch(`/api/drugs/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, card, pack, perDay, dosage })
+    });
+
+    const data = await res.json();
+    alert('Updated: ' + data.name);
+    window.location.href = '/manage';
+});
+</script>
+
 <!-- End main section -->
 <!-- add footer -->
 <%- include('includes/_footer') %>

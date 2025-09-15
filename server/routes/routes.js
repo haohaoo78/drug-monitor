@@ -21,5 +21,14 @@ route.put('/api/drugs/:id', validateDrug, controller.update); // validate khi cá
 route.delete('/api/drugs/:id', controller.delete);
 route.post('/api/purchase', controller.purchase);
 
+// route.post('/update-drug', validateDrug, async (req,res) => {
+//     const { id, name, card, pack, perDay, dosage } = req.body;
+//     try {
+//         const drug = await Drugdb.findByIdAndUpdate(id, { name, card, pack, perDay, dosage }, { useFindAndModify: false, new: true });
+//         res.redirect('/manage');
+//     } catch(err){
+//         res.status(500).render('error', { title: 'Error', message: err.message });
+//     }
+// });
 
 module.exports = route;//exports this so it can always be used elsewhere
