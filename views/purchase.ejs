@@ -43,24 +43,6 @@
     const days = document.getElementById('days').value;
     window.location.href = '/purchase?days=' + days;
   });
-
-  // khi bấm confirm purchase
-  document.querySelectorAll('.confirm-purchase').forEach(btn => {
-    btn.addEventListener('click', async function(){
-      const drugId = this.dataset.id;
-      const quantity = this.dataset.qty;
-
-      const res = await fetch('/api/purchase', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ drugId, quantity })
-      });
-
-      const data = await res.json();
-      alert(data.message || "Purchase done!");
-      window.location.reload();
-    });
-  });
 </script>
 
 <!-- add footer -->
